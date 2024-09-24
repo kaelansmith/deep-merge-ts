@@ -1,0 +1,38 @@
+{
+  "name": "@kaelan/deep-merge-ts",
+  "version": "0.0.1",
+  "description": "Deeply/recursively merge 2 or more objects while respecting type information.",
+  "main": "dist/index",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "tsc -p tsconfig.json -w --preserveWatchOutput",
+    "build": "npm run build-ts",
+    "build-ts": "tsc-silent -p tsconfig.json --suppress @",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaelansmith/deep-merge-ts.git"
+  },
+  "author": "Kaelan Smith",
+  "license": "LGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/kaelansmith/deep-merge-ts/issues"
+  },
+  "homepage": "https://github.com/kaelansmith/deep-merge-ts#readme",
+  "devDependencies": {
+    "@types/node": "^18.18.1",
+    "ts-essentials": "^9.4.1",
+    "tsc-watch": "^5.0.3",
+    "typescript": "^5.3.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

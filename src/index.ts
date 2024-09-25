@@ -1,44 +1,59 @@
-import { DeepPartial } from "ts-essentials";
+type DeepMergeTwo<T, U> = T extends Array<any>
+  ? U extends Array<any>
+    ? U
+    : U extends undefined
+    ? T
+    : U
+  : T extends object
+  ? U extends object
+    ? {
+        [K in keyof T | keyof U]: K extends keyof T
+          ? K extends keyof U
+            ? DeepMergeTwo<T[K], U[K]>
+            : T[K]
+          : K extends keyof U
+          ? U[K]
+          : never;
+      }
+    : U
+  : U;
 
-/**
- * Simple object check.
- * @param item
- * @returns {boolean}
- */
-export function isObject(item) {
+type DeepMergeAll<T extends object[]> = T extends [infer First, ...infer Rest]
+  ? Rest extends object[]
+    ? DeepMergeTwo<First, DeepMergeAll<Rest>>
+    : First
+  : {};
+
+export function isObject(item: unknown): item is Record<string, unknown> {
   return item && typeof item === "object" && !Array.isArray(item);
 }
 
-/**
- * Deep merge two objects.
- * @param target
- * @param ...sources
- */
-export function deepMerge<T extends Record<string, any>>(
-  base: T,
-  ...sources: DeepPartial<T>[]
-): T {
-  let result = { ...base };
+export function deepMerge<T extends object, U extends object[]>(
+  target: T,
+  ...sources: U
+): DeepMergeAll<[T, ...U]> {
+  return sources.reduce(
+    (result, source) => {
+      // Check if source is null or undefined
+      if (source == null) return result;
 
-  for (const source of sources) {
-    for (const key in source) {
-      if (source.hasOwnProperty(key)) {
+      Object.keys(source).forEach((key) => {
         const sourceValue = source[key];
-        const resultValue = result[key];
-
-        if (isObject(resultValue) && isObject(sourceValue)) {
-          // If both the result and source values are objects, merge them recursively
+        if (sourceValue === undefined) {
+          if (key in result) {
+            delete result[key];
+          }
+        } else if (isObject(result[key]) && isObject(sourceValue)) {
           result[key] = deepMerge(
-            { ...resultValue },
-            sourceValue as DeepPartial<typeof resultValue>
+            result[key] as Record<string, unknown>,
+            sourceValue
           );
         } else {
-          // Otherwise, directly assign the source value (including cases where it's undefined)
-          result[key] = sourceValue as T[Extract<keyof DeepPartial<T>, string>];
+          result[key] = sourceValue;
         }
-      }
-    }
-  }
-
-  return result as T;
+      });
+      return result;
+    },
+    { ...target }
+  ) as unknown as DeepMergeAll<[T, ...U]>;
 }

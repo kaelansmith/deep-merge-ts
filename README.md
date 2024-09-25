@@ -4,7 +4,7 @@ A tiny package for deeply/recursively merging 2 or more objects while producing 
 
 The goal of this package is to remain simple and tiny, perfect for use-cases where bundle size matters (i.e. frontend web apps).
 
-There are other alternative packages that provide way more functionality, but that also have a much larger footprint; for example, [`deepmerge-ts`](https://github.com/RebeccaStevens/deepmerge-ts) is very popular, well-tested, handles merging of things like Maps and Sets, and provides a ton of configuration options. But it may be overkill and potentially bloating your bundle size. They cover 100% of possible use-cases, whereas we take the 80/20 approach (take a glance at the source code for both and you'll understand).
+There are other alternative packages that provide way more functionality, but that also have a much larger footprint; for example, [`deepmerge-ts`](https://github.com/RebeccaStevens/deepmerge-ts) is very popular, handles merging of things like Maps and Sets, and provides a ton of configuration options. But it may be overkill and potentially bloating your bundle size. They cover 100% of possible use-cases, whereas we take the 80/20 approach (take a glance at the source code for both and you'll understand).
 
 # Installation
 

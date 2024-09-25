@@ -1,6 +1,6 @@
 # Deep Merge TS
 
-A tiny package for deeply/recursively merging 2 or more objects while producing a correctly typed result.
+A tiny package (~265 bytes gzipped) for deeply/recursively merging 2 or more objects while producing a correctly typed result.
 
 The goal of this package is to remain simple and tiny, perfect for use-cases where bundle size matters (i.e. frontend web apps).
 

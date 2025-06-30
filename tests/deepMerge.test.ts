@@ -155,4 +155,44 @@ describe("deepMerge", () => {
     expect(typeof result.c).toBe("string");
     expect(typeof result.d).toBe("boolean");
   });
+
+  // Test for invalidValues option
+  test("respects invalidValues option", () => {
+    const a = { a: 1, b: 2, c: 3 };
+    const b = {
+      a: 10,
+      b: null,
+      c: undefined,
+      __deepMergeOptions__: { invalidValues: [null, undefined] },
+    };
+    const result = deepMerge(a, b);
+    expect(result).toEqual({ a: 10, b: 2, c: 3 });
+
+    // Compile-time type assertion
+    type ExpectedType = { a: number; b: number; c: number };
+    assertType<ExpectedType>(result);
+
+    // Runtime type assertions
+    expect(typeof result.a).toBe("number");
+    expect(typeof result.b).toBe("number");
+    expect(typeof result.c).toBe("number");
+  });
+
+  test("respects __deepMergeOptions__ property in source objects", () => {
+    const a = { a: 1, b: 2, c: 3 };
+    const b = {
+      a: 10,
+      b: null,
+      c: undefined,
+      __deepMergeOptions__: {
+        invalidValues: [null, undefined],
+      },
+    };
+
+    const result = deepMerge(a, b);
+    expect(result).toEqual({ a: 10, b: 2, c: 3 });
+
+    // The __deepMergeOptions__ property should not be in the result
+    expect(result).not.toHaveProperty("__deepMergeOptions__");
+  });
 });

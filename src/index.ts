@@ -77,20 +77,16 @@ export function deepMerge<T extends object, U extends object[]>(
         const sourceValue = source[key];
 
         // Skip if sourceValue is in invalidValues
-        if (invalidValues.some((value) => Object.is(value, sourceValue))) {
+        if (invalidValues.some((value) => Object.is(value, sourceValue)))
           return;
-        }
 
         if (sourceValue === undefined) {
-          if (key in result) {
-            delete result[key];
-          }
+          if (key in result) delete result[key];
         } else if (isObject(result[key]) && isObject(sourceValue)) {
           // Pass options to nested objects by adding them to the sourceValue
           const nestedSource = { ...sourceValue };
-          if (options) {
+          if (options)
             (nestedSource as ObjectWithOptions).__deepMergeOptions__ = options;
-          }
 
           result[key] = deepMerge(
             result[key] as Record<string, unknown>,
@@ -100,6 +96,7 @@ export function deepMerge<T extends object, U extends object[]>(
           result[key] = sourceValue;
         }
       });
+
       return result;
     },
     { ...target }

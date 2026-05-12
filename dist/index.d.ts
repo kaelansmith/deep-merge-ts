@@ -6,3 +6,4 @@ export declare function isObject(item: unknown): item is Record<string, unknown>
 type ExcludeOptions<T> = Omit<T, "__deepMergeOptions__">;
 export declare function deepMerge<T extends object, U extends object[]>(target: T, ...sources: U): ExcludeOptions<DeepMergeAll<[T, ...U]>>;
 export {};
+//# sourceMappingURL=index.d.ts.map

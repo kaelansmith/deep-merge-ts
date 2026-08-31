@@ -60,7 +60,7 @@ export function deepMerge<T extends object, U extends object[]>(
   return sources?.reduce(
     (result, source) => {
       // Check if source is null or undefined
-      if (source == null) return result;
+      if (source == null || source === undefined) return result;
 
       // Extract options if they exist
       const options = (source as ObjectWithOptions).__deepMergeOptions__;
@@ -77,8 +77,7 @@ export function deepMerge<T extends object, U extends object[]>(
         const sourceValue = source[key];
 
         // Skip if sourceValue is in invalidValues
-        if (invalidValues.some((value) => Object.is(value, sourceValue)))
-          return;
+        if (invalidValues.some((value) => Object.is(value, sourceValue))) return;
 
         if (sourceValue === undefined) {
           if (key in result) delete result[key];

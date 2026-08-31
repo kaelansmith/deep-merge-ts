@@ -11,7 +11,7 @@ exports.isObject = isObject;
 function deepMerge(target, ...sources) {
     return sources?.reduce((result, source) => {
         // Check if source is null or undefined
-        if (source == null)
+        if (source == null || source === undefined)
             return result;
         // Extract options if they exist
         const options = source.__deepMergeOptions__;

@@ -2,29 +2,29 @@ type DeepMergeTwo<T, U> = T extends Function
   ? U extends Function
     ? U
     : U extends undefined
-    ? T
-    : U
+      ? T
+      : U
   : T extends Array<any>
-  ? U extends Array<any>
-    ? U
-    : U extends undefined
-    ? T
-    : U
-  : T extends Record<string, any>
-  ? U extends Record<string, any>
-    ? {
-        [K in keyof T | keyof U]: K extends keyof U
-          ? U[K]
-          : K extends keyof T
-          ? T[K]
-          : never;
-      }
-    : U extends undefined
-    ? T
-    : U
-  : U extends undefined
-  ? T
-  : U;
+    ? U extends Array<any>
+      ? U
+      : U extends undefined
+        ? T
+        : U
+    : T extends Record<string, any>
+      ? U extends Record<string, any>
+        ? {
+            [K in keyof T | keyof U]: K extends keyof U
+              ? U[K]
+              : K extends keyof T
+                ? T[K]
+                : never;
+          }
+        : U extends undefined
+          ? T
+          : U
+      : U extends undefined
+        ? T
+        : U;
 
 type DeepMergeAll<T extends object[]> = T extends [infer First, ...infer Rest]
   ? Rest extends object[]
@@ -77,7 +77,8 @@ export function deepMerge<T extends object, U extends object[]>(
         const sourceValue = source[key];
 
         // Skip if sourceValue is in invalidValues
-        if (invalidValues.some((value) => Object.is(value, sourceValue))) return;
+        if (invalidValues.some((value) => Object.is(value, sourceValue)))
+          return;
 
         if (sourceValue === undefined) {
           if (key in result) delete result[key];
@@ -89,7 +90,7 @@ export function deepMerge<T extends object, U extends object[]>(
 
           result[key] = deepMerge(
             result[key] as Record<string, unknown>,
-            nestedSource
+            nestedSource,
           );
         } else {
           result[key] = sourceValue;
@@ -98,6 +99,6 @@ export function deepMerge<T extends object, U extends object[]>(
 
       return result;
     },
-    { ...target }
+    { ...target },
   ) as unknown as ExcludeOptions<DeepMergeAll<[T, ...U]>>;
 }

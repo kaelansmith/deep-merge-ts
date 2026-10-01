@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deepMerge = exports.isObject = void 0;
+exports.isObject = isObject;
+exports.deepMerge = deepMerge;
 function isObject(item) {
     return (item &&
         typeof item === "object" &&
         !Array.isArray(item) &&
         !(item instanceof Function));
 }
-exports.isObject = isObject;
 function deepMerge(target, ...sources) {
     return sources?.reduce((result, source) => {
         // Check if source is null or undefined
@@ -45,4 +45,3 @@ function deepMerge(target, ...sources) {
         return result;
     }, { ...target });
 }
-exports.deepMerge = deepMerge;

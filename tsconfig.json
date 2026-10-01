@@ -10,14 +10,15 @@
     "moduleResolution": "NodeNext",
     "strict": false,
     "noEmit": false,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["jest", "node"],
+    "moduleDetection": "auto"
   },
   "include": ["src/**/*"],
   "exclude": ["test", "node_modules"]
